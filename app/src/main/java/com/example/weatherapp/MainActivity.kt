@@ -14,7 +14,7 @@ import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
-    val CITY: String = "dhaka,bd"
+    val CITY: String = "new york,us"
     /* The API key for the OpenWeatherMap API. */
     val API: String = "e6211fcc04c907de119bfc9efe5f739a"
 
@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
         override fun doInBackground(vararg p0: String?): String {
             var response: String?
             try {
-                response = URL("https://api.openweathermap.org/data/2.5/weather?q=$CITY&units=metric&appid=$API")
+                response = URL("https://api.openweathermap.org/data/2.5/weather?q=$CITY&units=imperial&appid=$API")
                         .readText(Charsets.UTF_8)
             } catch (e: Exception) {
                 response = null
@@ -60,10 +60,10 @@ class MainActivity : AppCompatActivity() {
                 val weather = jsonObj.getJSONArray("weather").getJSONObject(0)
 
                 val updatedAt:Long = jsonObj.getLong("dt")
-                val updatedAtText = "Updated at: "+ SimpleDateFormat("dd/MM/yyyy hh:mm a", Locale.ENGLISH).format(Date(updatedAt*1000))
-                val temp = main.getString("temp")+"°C"
-                val tempMin = "Min Temp: " + main.getString("temp_min")+"°C"
-                val tempMax = "Max Temp: " + main.getString("temp_max")+"°C"
+                val updatedAtText = "Updated at: "+ SimpleDateFormat("MM/dd/yyyy hh:mm a", Locale.ENGLISH).format(Date(updatedAt*1000))
+                val temp = main.getString("temp")+"°F"
+                val tempMin = "Min Temp: " + main.getString("temp_min")+"°F"
+                val tempMax = "Max Temp: " + main.getString("temp_max")+"°F"
                 val pressure = main.getString("pressure")
                 val humidity = main.getString("humidity")
 
