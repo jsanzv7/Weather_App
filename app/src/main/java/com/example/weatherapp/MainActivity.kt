@@ -69,7 +69,7 @@ class MainActivity : AppCompatActivity() {
 
                 val sunrise:Long = sys.getLong("sunrise")
                 val sunset:Long = sys.getLong("sunset")
-                val windSpeed = wind.getString("speed")
+                val windSpeed = wind.getString("speed")+" mph"
                 val weatherDescription = weather.getString("description")
 
                 val address = jsonObj.getString("name")+", "+sys.getString("country")
