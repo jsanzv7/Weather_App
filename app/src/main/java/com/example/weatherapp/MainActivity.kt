@@ -13,9 +13,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
-
     val CITY: String = "new york,us"
-    /* The API key for the OpenWeatherMap API. */
     val API: String = "e6211fcc04c907de119bfc9efe5f739a"
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,15 +24,11 @@ class MainActivity : AppCompatActivity() {
     }
     inner class weatherTask() : AsyncTask<String, Void, String>()
     {
-        /* A function that is called before the task is executed. */
+
         override fun onPreExecute() {
-            /* Calling the `onPreExecute()` method of the parent class. */
             super.onPreExecute()
-            /* Setting the visibility of the progress bar to visible. */
             findViewById<ProgressBar>(R.id.loader).visibility = View.VISIBLE
-            /* Hiding the main container. */
             findViewById<RelativeLayout>(R.id.mainContainer).visibility = View.GONE
-            /* Hiding the error text. */
             findViewById<TextView>(R.id.errorText).visibility = View.GONE
         }
 
@@ -43,7 +37,8 @@ class MainActivity : AppCompatActivity() {
             try {
                 response = URL("https://api.openweathermap.org/data/2.5/weather?q=$CITY&units=imperial&appid=$API")
                         .readText(Charsets.UTF_8)
-            } catch (e: Exception) {
+            }
+            catch (e: Exception) {
                 response = null
             }
             return response.toString()
@@ -69,15 +64,14 @@ class MainActivity : AppCompatActivity() {
 
                 val sunrise:Long = sys.getLong("sunrise")
                 val sunset:Long = sys.getLong("sunset")
-                val windSpeed = wind.getString("speed")
+                val windSpeed = wind.getString("speed")+" mph"
                 val weatherDescription = weather.getString("description")
 
                 val address = jsonObj.getString("name")+", "+sys.getString("country")
 
-                /* Populating extracted data into our views */
-                findViewById<TextView>(R.id.address).text = address
+                findViewById<TextView>(R.id.weather_location).text = address
                 findViewById<TextView>(R.id.updated_at).text =  updatedAtText
-                findViewById<TextView>(R.id.status).text = weatherDescription.capitalize()
+                findViewById<TextView>(R.id.weather_status).text = weatherDescription.capitalize()
                 findViewById<TextView>(R.id.temp).text = temp
                 findViewById<TextView>(R.id.temp_min).text = tempMin
                 findViewById<TextView>(R.id.temp_max).text = tempMax
@@ -87,10 +81,10 @@ class MainActivity : AppCompatActivity() {
                 findViewById<TextView>(R.id.pressure).text = pressure
                 findViewById<TextView>(R.id.humidity).text = humidity
 
-                /* Views populated, Hiding the loader, Showing the main design */
                 findViewById<ProgressBar>(R.id.loader).visibility = View.GONE
                 findViewById<RelativeLayout>(R.id.mainContainer).visibility = View.VISIBLE
-            } catch (e: Exception) {
+            }
+            catch (e: Exception) {
                 findViewById<ProgressBar>(R.id.loader).visibility = View.GONE
                 findViewById<TextView>(R.id.errorText).visibility = View.VISIBLE
             }
